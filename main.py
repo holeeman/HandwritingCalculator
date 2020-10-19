@@ -1,5 +1,4 @@
-def main():
-    print("Hello, World!")
+# -*- coding: utf-8 -*-
 
 if __name__ == "__main__":
-    main()
+    print("Nothing here yet. You can look at other codes.")
