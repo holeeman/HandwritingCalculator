@@ -16,7 +16,9 @@ The dataset is licensed under a Creative Commons Attribution-NonCommercial-Share
 
 We first preprocessed dataset to become 100 x 100 images, and created label ranging from 0 to 21.
 
-![processed_dataset_image.PNG](demo/processed_dataset_image.PNG)
+We used dilation method to thicken the line strokes, and added padding to make the square image before resizing to 100 x 100.
+
+![processed_dataset_image.PNG](demo/processed_dataset_image.PNG "preprocessed dataset")
 
 Then we splitted the datset into train set and test set (80% 20%).
 
