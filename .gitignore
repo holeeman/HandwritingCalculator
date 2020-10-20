@@ -1,7 +1,8 @@
 __pycache__/*
+backend/__pycache__/*
 venv/*
 .vscode/*
 input/*
-data/*
+backend/data/*
 *.ipynb
 *.npy
