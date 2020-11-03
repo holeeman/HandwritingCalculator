@@ -3,6 +3,9 @@ backend/__pycache__/*
 venv/*
 .vscode/*
 input/*
+backend/test/*
 backend/data/*
+backend/testdata/*
 *.ipynb
 *.npy
+backend/test/single_sym.py

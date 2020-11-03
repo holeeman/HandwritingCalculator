@@ -9,7 +9,6 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.models import load_model
 
-
 class Network:
     NUM_CLASSES = 22
     INPUT_SHAPE = (100, 100, 3)
@@ -22,20 +21,20 @@ class Network:
 
     def get_architecture(self, num_classes, input_shape):
         arch = [
-                Conv2D(64, 11, padding='valid', activation='relu', strides=4, input_shape=input_shape),
+                Conv2D(128, 14, padding='valid', activation='relu', strides=4, input_shape=input_shape),
                 MaxPooling2D(3, padding='valid', strides=2),
 
-                Conv2D(128, 7, padding='same', activation='relu'),
+                Conv2D(256, 9, padding='same', activation='relu'),
                 MaxPooling2D(3, padding='valid', strides=2),
 
-                Conv2D(256, 3, padding='same', activation='relu'),
-                Conv2D(256, 3, padding='same', activation='relu'),
+                Conv2D(512, 3, padding='same', activation='relu'),
+                Conv2D(512, 3, padding='same', activation='relu'),
                 MaxPooling2D(2, padding='valid', strides=2),
 
                 Flatten(),
-                Dense(64, activation='relu'),
+                Dense(128, activation='relu'),
                 Dropout(0.5),
-                Dense(64, activation='relu'),
+                Dense(128, activation='relu'),
                 Dropout(0.5),
                 Dense(num_classes, activation='softmax')
             ]
