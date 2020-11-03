@@ -1,11 +1,11 @@
 __pycache__/*
-backend/__pycache__/*
+calculator/__pycache__/*
 venv/*
 .vscode/*
 input/*
-backend/test/*
-backend/data/*
-backend/testdata/*
+calculator/test/*
+calculator/data/*
+calculator/testdata/*
 *.ipynb
 *.npy
-backend/test/single_sym.py
+calculator/test/single_sym.py
