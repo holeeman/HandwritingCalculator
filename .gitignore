@@ -10,3 +10,4 @@ calculator/testdata/*
 *.npy
 calculator/test/single_sym.py
 .idea/*
+frontend/__pycache__
