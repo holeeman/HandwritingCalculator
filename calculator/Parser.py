@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from PIL import Image
+from Pipeline import Pipe
 
 def hss(arr):
     if len(arr) == 0:
@@ -71,7 +72,16 @@ def vss(arr):
 
     return f"({hss(top)})/({hss(bottom)})"
 
-def parse(arr):
-    if arr == 0:
-        return ""
-    return hss(sorted(arr, key=lambda x:x[0][0]))
+class Parser(Pipe):
+    def __init__(self):
+        pass
+
+    def exec(self, arg=None):
+        if arg:
+            return self.parse(arg)
+        return None
+    
+    def parse(self, arr):
+        if arr == 0:
+            return ""
+        return hss(sorted(arr, key=lambda x:x[0][0]))

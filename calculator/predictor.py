@@ -1,17 +1,23 @@
-from network import Network
 from imtool import convertImage
 from symbol import Symbol
+from Pipeline import Pipe
 import numpy as np
-class PredictSetting:
-    threshold = 0.7
-    network = Network()
 
-PredictSetting.network.load("recognition_model")
+class Predictor(Pipe):
+    def __init__(self, network):
+        self.threshold = 0.7
+        self.network = network
+    
+    def exec(self, arg=None):
+        print("predictor:", arg)
+        if arg:
+            return self.predict(arg)
+        return None
 
-def predict(img):
-    arr = convertImage(img)
-    prd = PredictSetting.network.predict(np.array([arr])/255)
-    ind = np.argmax(prd)
-    if prd[0][ind] < PredictSetting.threshold:
-        return "?"
-    return f"{Symbol.classes[ind]}"
+    def predict(self, img):
+        arr = convertImage(img)
+        prd = self.network.predict(np.array([arr])/255)
+        ind = np.argmax(prd)
+        if prd[0][ind] < self.threshold:
+            return "?"
+        return f"{Symbol.classes[ind]}"

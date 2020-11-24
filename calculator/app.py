@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt, QPoint, QBuffer
 import sys, io
 
 class CalculatorGUI(QWidget):
-    canvasSize = (1000,600)
+    canvasSize = (1000,500)
     canvasPosition = (0, 0)
     toolSpace = (0, 100)
     toolStartX = canvasSize[0] + canvasPosition[0]
@@ -22,7 +22,7 @@ class CalculatorGUI(QWidget):
     
     def __init__(self):
         super().__init__()
-        self.evaluator = None
+        self.onDraw = None
         self.setWindowTitle("Handwriting Calculator")
         self.setGeometry(100, 100,
             CalculatorGUI.toolStartX + CalculatorGUI.toolSpace[0], CalculatorGUI.toolStartY + CalculatorGUI.toolSpace[1])
@@ -86,25 +86,25 @@ class CalculatorGUI(QWidget):
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.drawing = False
-        self.evaluate()
+        self.triggerOnDraw()
 
     def paintEvent(self, event):
         x, y = self.image_pos
         canvasPainter = QPainter(self) 
         canvasPainter.drawImage(x, y, self.image)
     
-    def setEvaluator(self, evaluator):
-        self.evaluator = evaluator
+    def setOnDraw(self, func):
+        self.onDraw = func
     
-    def evaluate(self):
-        if self.evaluator:
+    def triggerOnDraw(self):
+        if self.onDraw:
             buffer = QBuffer()
             buffer.open(QBuffer.ReadWrite)
             self.image.save(buffer, "PNG")
-            result = self.evaluator(io.BytesIO(buffer.data()))
-            parsed, evaluated = result
-            self.setExprLabel(parsed)
-            self.setAnsLabel(str(evaluated))
+            result = self.onDraw(io.BytesIO(buffer.data()))
+            expr, ans = result
+            self.setExprLabel(expr)
+            self.setAnsLabel(str(ans))
     
     def clear(self):
         self.image.fill(Qt.white)
@@ -112,14 +112,18 @@ class CalculatorGUI(QWidget):
         self.ansLabel.setText("")
         self.update()
 
-def run_gui(app, window):
-    app.exec_()
-    window.show()
-def init_gui():
-    app = QApplication(sys.argv)
-    window = CalculatorGUI()
-    return app, window
+class CalculatorApplication:
+    def __init__(self, calculator=None):
+        self.app = QApplication(sys.argv)
+        self.window = CalculatorGUI()
+        self.calculator = calculator
+    
+    def run(self):
+        if self.calculator:
+            self.window.setOnDraw(self.calculator.exec)
+        self.app.exec_()
+        self.window.show()
 
 if __name__ == "__main__":
-    app, window = init_gui()
-    run_gui(app, window)
+    calculator = CalculatorApplication()
+    calculator.run()
