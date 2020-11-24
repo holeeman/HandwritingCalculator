@@ -3,13 +3,12 @@ from symbol import Symbol
 from Pipeline import Pipe
 import numpy as np
 
-class Predictor(Pipe):
+class Classifier(Pipe):
     def __init__(self, network):
         self.threshold = 0.7
         self.network = network
     
     def exec(self, arg=None):
-        print("predictor:", arg)
         if arg:
             return self.predict(arg)
         return None

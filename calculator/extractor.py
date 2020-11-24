@@ -7,7 +7,6 @@ class Extractor(Pipe):
         self.predictor = predictor
     
     def exec(self, arg=None):
-        print("extractor:", arg)
         return self.extract(arg)
 
     def extract(self, img):
