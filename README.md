@@ -6,6 +6,23 @@ We're creating a calculator with GUI that recognizes handwritten math expression
 
 It would be handy to have a calculator which evaluates handwritten math.
 
+## Testing
+
+you can go to calculator directory and run following command:
+
+main.py [-h] [-t test image path] [-m model path]
+
+optional arguments:
+-h, --help          show this help message and exit
+-t test image path  testing image on given path
+-m model path       set classifier model specified on given path
+
+### example usage:
+
+- main.py
+
+- main.py -t samples/sample1.PNG
+
 ## Dataset
 
 We used CROHME 2014 dataset compiled by Harold Mouchère.
@@ -30,7 +47,7 @@ The network architecture is inside network.py
 
 Hosung Lee
 
-Andrew Hong
+Andrew Hung
 
 Spencer Bass
 
