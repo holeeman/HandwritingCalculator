@@ -1,5 +1,5 @@
 from imtool import convertImage
-from symbol import Symbol
+from Symbols import Symbols
 from Pipeline import Pipe
 import numpy as np
 
@@ -19,4 +19,4 @@ class Classifier(Pipe):
         ind = np.argmax(prd)
         if prd[0][ind] < self.threshold:
             return "?"
-        return f"{Symbol.classes[ind]}"
+        return f"{Symbols.classes[ind]}"

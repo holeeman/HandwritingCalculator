@@ -1,4 +1,5 @@
 from sympy.parsing.sympy_parser import parse_expr
+from sympy.core.numbers import Float
 from Pipeline import Pipe
 
 class Evaluator(Pipe):
@@ -7,25 +8,36 @@ class Evaluator(Pipe):
 
     def exec(self, arg=None):
         if arg:
-            return self.evaluate(arg)
+            return Evaluator.evaluate(arg)
         return None
     
-    def evaluate(self, string):
-        if len(string) == 0:
-            return ""
-        if string[-1] == "=":
-            string = string[0:len(string)-1]
-        string = string.replace("=", "==")
+    @staticmethod
+    def evaluate(string):
         string = string.replace("times", "*")
         string = string.replace("div", "/")
-        string = string.replace(")(", ")*(")
+        converted = string
+        if len(converted) == 0:
+            return ""
+        if converted[-1] == "=":
+            converted = converted[0:len(converted)-1]
+        converted = converted.replace("=", "==")
+        converted = converted.replace(")(", ")*(")
+        converted = converted.replace("^", "**")
         
         try:
-            evaluated = parse_expr(string).evalf()
-            return string, "%g"%(evaluated)
-        except SyntaxError:
+            parsed = parse_expr(converted)
+            evaluated = parsed.evalf() if not isinstance(parsed, bool) else parsed
+            if type(evaluated) == Float:
+                result = "%g"%(evaluated)
+            else:
+                result = evaluated
+            return string, result
+        except SyntaxError as e:
             return string, "?"
-        except TypeError:
+        except TypeError as e:
             return string, "?"
-        except:
+        except Exception as e:
             return string, "?"
+
+if __name__ == '__main__':
+    print(Evaluator.evaluate("sqrt(-1)"))

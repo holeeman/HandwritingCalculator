@@ -3,8 +3,8 @@ import numpy as np
 from PIL import Image
 from Pipeline import Pipe
 class Extractor(Pipe):
-    def __init__(self, predictor=None):
-        self.predictor = predictor
+    def __init__(self, classifier=None):
+        self.classifier = classifier
     
     def exec(self, arg=None):
         return self.extract(arg)
@@ -23,6 +23,6 @@ class Extractor(Pipe):
             mask = np.zeros(img.shape, np.uint8)
             cv2.drawContours(mask, contours, i, (255, 255, 255), thickness=cv2.FILLED)
             out = cv2.bitwise_not(cv2.subtract(mask, res))[y:y+h, x:x+w]
-            pred = self.predictor.predict(out) if self.predictor else None
+            pred = self.classifier.predict(out) if self.classifier else None
             extracted.append(((x,y,w,h),pred))
         return extracted

@@ -1,4 +1,4 @@
-class Symbol:
+class Symbols:
     classes = ['(',
         ')',
         '+',
@@ -24,7 +24,7 @@ class Symbol:
 
 if __name__ == "__main__":
     import os
-    for s in Symbol.classes:
+    for s in Symbols.classes:
         datapath = os.path.join(".","testdata",s)
         os.makedirs(datapath)
         print(datapath)
