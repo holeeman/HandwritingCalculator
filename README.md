@@ -8,7 +8,7 @@ It would be handy to have a calculator which evaluates handwritten math.
 
 ## Testing
 
-you can go to calculator directory and run following command:
+from root directory and run following command:
 
 ```main.py [-h] [-t test image path] [-m model path]```
 
