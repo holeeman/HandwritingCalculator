@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import QApplication, QAction, QPushButton, QMainWindow, QListView, QLabel, QWidget
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QPixmap, QPainter, QImage, QPen, QFont
 from PyQt5.QtCore import Qt, QPoint, QBuffer
-import sys, io
+import io
+import sys
 
-class CalculatorGUI(QWidget):
+class CalculatorWidget(QWidget):
     canvasSize = (1000,500)
     canvasPosition = (0, 0)
     toolSpace = (0, 100)
@@ -25,11 +26,11 @@ class CalculatorGUI(QWidget):
         self.onDraw = None
         self.setWindowTitle("Handwriting Calculator")
         self.setGeometry(100, 100,
-            CalculatorGUI.toolStartX + CalculatorGUI.toolSpace[0], CalculatorGUI.toolStartY + CalculatorGUI.toolSpace[1])
+            CalculatorWidget.toolStartX + CalculatorWidget.toolSpace[0], CalculatorWidget.toolStartY + CalculatorWidget.toolSpace[1])
 
         # canvas
-        self.image_pos = CalculatorGUI.canvasPosition
-        self.image_size = CalculatorGUI.canvasSize
+        self.image_pos = CalculatorWidget.canvasPosition
+        self.image_size = CalculatorWidget.canvasSize
         imw, imh = self.image_size
         self.drawing = False
         self.mouse_pos = QPoint()
@@ -39,21 +40,21 @@ class CalculatorGUI(QWidget):
         # clear button
         self.button = QPushButton('clear', self)
         self.button.clicked.connect(self.clear)
-        self.button.resize(CalculatorGUI.buttonSize[0], CalculatorGUI.buttonSize[1])
-        self.button.move(CalculatorGUI.buttonPosition[0], CalculatorGUI.buttonPosition[1])
+        self.button.resize(CalculatorWidget.buttonSize[0], CalculatorWidget.buttonSize[1])
+        self.button.move(CalculatorWidget.buttonPosition[0], CalculatorWidget.buttonPosition[1])
 
         # math expression label
         self.label = QLabel("", self)
-        self.label.resize(CalculatorGUI.exprLabelSize[0], CalculatorGUI.exprLabelSize[1])
-        self.label.move(CalculatorGUI.exprLabelPosition[0], CalculatorGUI.exprLabelPosition[1])
+        self.label.resize(CalculatorWidget.exprLabelSize[0], CalculatorWidget.exprLabelSize[1])
+        self.label.move(CalculatorWidget.exprLabelPosition[0], CalculatorWidget.exprLabelPosition[1])
         self.label.setFont(QFont("Courier", 15))
         self.label.setStyleSheet("background: white;qproperty-alignment: AlignCenter;")
         self.label.alignment()
 
         # math evaluation label
         self.ansLabel = QLabel("", self)
-        self.ansLabel.resize(CalculatorGUI.ansLabelSize[0],CalculatorGUI.ansLabelSize[1])
-        self.ansLabel.move(CalculatorGUI.ansLabelPosition[0], CalculatorGUI.ansLabelPosition[1])
+        self.ansLabel.resize(CalculatorWidget.ansLabelSize[0],CalculatorWidget.ansLabelSize[1])
+        self.ansLabel.move(CalculatorWidget.ansLabelPosition[0], CalculatorWidget.ansLabelPosition[1])
         self.ansLabel.setFont(QFont("Courier", 15, 100))
         self.ansLabel.setStyleSheet("background: white;qproperty-alignment: AlignCenter;")
         self.idassign = 0
@@ -112,18 +113,19 @@ class CalculatorGUI(QWidget):
         self.ansLabel.setText("")
         self.update()
 
-class CalculatorApplication:
-    def __init__(self, calculator=None):
+
+class GUICalculatorApplication(QApplication):
+    def __init__(self):
         self.app = QApplication(sys.argv)
-        self.window = CalculatorGUI()
-        self.calculator = calculator
+        self.window = CalculatorWidget()
+    
+    def connect(self, method):
+        self.window.setOnDraw(method)
     
     def run(self):
-        if self.calculator:
-            self.window.setOnDraw(self.calculator.exec)
         self.app.exec_()
         self.window.show()
 
 if __name__ == "__main__":
-    calculator = CalculatorApplication()
+    calculator = GUICalculatorApplication()
     calculator.run()

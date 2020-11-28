@@ -1,6 +1,6 @@
 from sympy.parsing.sympy_parser import parse_expr
-from sympy.core.numbers import Float
-from Pipeline import Pipe
+from sympy.core.numbers import Float, ComplexInfinity
+from calculator.utils.pipeline import Pipe
 
 class Evaluator(Pipe):
     def __init__(self):
@@ -26,9 +26,12 @@ class Evaluator(Pipe):
         
         try:
             parsed = parse_expr(converted)
+
             evaluated = parsed.evalf() if not isinstance(parsed, bool) else parsed
             if type(evaluated) == Float:
                 result = "%g"%(evaluated)
+            elif type(evaluated) == ComplexInfinity:
+                result = "div/0!"
             else:
                 result = evaluated
             return string, result
@@ -40,4 +43,4 @@ class Evaluator(Pipe):
             return string, "?"
 
 if __name__ == '__main__':
-    print(Evaluator.evaluate("sqrt(-1)"))
+    print(Evaluator.evaluate("1/0"))

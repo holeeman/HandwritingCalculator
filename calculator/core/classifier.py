@@ -1,6 +1,6 @@
-from imtool import convertImage
-from Symbols import Symbols
-from Pipeline import Pipe
+from calculator.utils.imtool import convertImage
+from calculator.utils.pipeline import Pipe
+from calculator.network.symbols import Symbols
 import numpy as np
 
 class Classifier(Pipe):

@@ -23,8 +23,9 @@ class Symbols:
         'times']
 
 if __name__ == "__main__":
-    import os
-    for s in Symbols.classes:
-        datapath = os.path.join(".","testdata",s)
-        os.makedirs(datapath)
-        print(datapath)
+    # import os
+    # for s in Symbols.classes:
+    #     datapath = os.path.join(".","testdata",s)
+    #     os.makedirs(datapath)
+    #     print(datapath)
+    pass

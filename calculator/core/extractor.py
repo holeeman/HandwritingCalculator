@@ -1,7 +1,8 @@
 import cv2
 import numpy as np
 from PIL import Image
-from Pipeline import Pipe
+from calculator.utils.pipeline import Pipe
+
 class Extractor(Pipe):
     def __init__(self, classifier=None):
         self.classifier = classifier
@@ -26,3 +27,7 @@ class Extractor(Pipe):
             pred = self.classifier.predict(out) if self.classifier else None
             extracted.append(((x,y,w,h),pred))
         return extracted
+
+if __name__ == '__main__':
+    ext = Extractor()
+    print(ext.extract("samples/sample11.png"))

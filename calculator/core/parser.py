@@ -1,8 +1,5 @@
-import cv2
-import numpy as np
-from PIL import Image
-from Pipeline import Pipe
-from segmentation import *
+from calculator.utils.pipeline import Pipe
+from calculator.core.segmentation import segment
 
 class Parser(Pipe):
     def __init__(self):

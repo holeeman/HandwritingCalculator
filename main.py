@@ -12,24 +12,28 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     print("loading modules...")
+
     import os
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-    from app import CalculatorApplication
-    from Calculator import Calculator
+    from calculator.ui.gui import GUICalculatorApplication
+    from calculator.core.calculator import createCalculator
+    from calculator.network.models import loadClassifierModel
+    modelPath = args.m if args.m else "recognition_model"
 
-    calculator = Calculator(modelPath=args.m)
+    calculator = createCalculator(loadClassifierModel(modelPath))
+
     if args.t:
         testpath = args.t
         imfiles = [testpath]
 
         if isdir(testpath):
             imfiles = [join(testpath, f) for f in listdir(testpath) if isfile(join(testpath, f))]
-            print(imfiles)
 
         for imfile in imfiles:
             expr, res = calculator.exec(imfile)
             print(f"[{basename(imfile)}] Expression: {expr}\tResult: {res}")
             
     else:
-        calculatorApp = CalculatorApplication(calculator)
+        calculatorApp = GUICalculatorApplication()
+        calculatorApp.connect(calculator.calculate)
         calculatorApp.run()
