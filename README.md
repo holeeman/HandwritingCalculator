@@ -6,6 +6,12 @@ We're creating a calculator with GUI that recognizes handwritten math expression
 
 It would be handy to have a calculator which evaluates handwritten math.
 
+## Installation
+
+from calculator directory run following command:
+
+```pip3 install -r requirements.txt```
+
 ## Testing
 
 from root directory and run following command:

@@ -1,6 +1,6 @@
 class Pipe:
     def exec(self, arg=None):
-        pass
+        ...
 
 class Pipeline:
     def __init__(self, *args):

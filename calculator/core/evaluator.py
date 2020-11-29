@@ -41,6 +41,3 @@ class Evaluator(Pipe):
             return string, "?"
         except Exception as e:
             return string, "?"
-
-if __name__ == '__main__':
-    print(Evaluator.evaluate("1/0"))

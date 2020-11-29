@@ -27,7 +27,3 @@ class Extractor(Pipe):
             pred = self.classifier.predict(out) if self.classifier else None
             extracted.append(((x,y,w,h),pred))
         return extracted
-
-if __name__ == '__main__':
-    ext = Extractor()
-    print(ext.extract("samples/sample11.png"))
