@@ -24,9 +24,9 @@ optional arguments:
 
   **-h**, **--help**          show this help message and exit
 
-  **-t** **test image path**  testing image on given path
+  **-t** **[test image path]**  testing image on given path
 
-  **-m** **model path**       set classifier model specified on given path     
+  **-m** **[model path]**       set classifier model specified on given path     
 
   **--no-graphics**       doesn't display graphics when running test file(s)
 
