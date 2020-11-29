@@ -5,7 +5,7 @@ from os.path import isdir, basename, isfile, join
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser = argparse.ArgumentParser(description='Recognize and evaluates handwritten math expressions.')
     parser.add_argument('-t', metavar='test image path',help='testing image on given path')
     parser.add_argument('-m', metavar='model path', help='set classifier model specified on given path')
     parser.add_argument('--no-graphics', action='store_const', const=True, help='doesn\'t display graphics when running test file(s)')
@@ -36,7 +36,7 @@ if __name__ == "__main__":
             imfiles = [join(testpath, f) for f in listdir(testpath) if isfile(join(testpath, f))]
 
         for imfile in imfiles:
-            p, e = calculator.calculate(imfile) if args.no_graphics else vevaluate(imfile, _timeout=100)
+            p, e = calculator.calculate(imfile) if args.no_graphics else vevaluate(imfile, _wait=50, _timeout=10)
             print(f" ====== {basename(imfile)} ======")
             print("* Equation: ")
             print(f" {p}")

@@ -7,6 +7,7 @@ class OnDrawAsyncWorkerSignal(QObject):
     error = pyqtSignal(tuple)
     finished = pyqtSignal()
 
+
 class OnDrawAsyncWorker(QRunnable):
     def __init__(self, fn, img):
         super(OnDrawAsyncWorker, self).__init__()

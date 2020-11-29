@@ -43,7 +43,7 @@ def hss(tokens):
     if len(tokens) > 0 and tokens[0].symbol == 'sqrt':
         return parse_sqrt(tokens)
     for t in tokens:
-        if len(group) > 0 and (t.x > xbound or group[0].gtype() in [Token.Digit, Token.Group]):
+        if len(group) > 0 and (t.x > xbound or group[0].symbol not in ['-', 'sqrt']):
             groups.append(group)
             group = []
         group.append(t)
@@ -100,6 +100,8 @@ def parse_exp(groups):
     for i in range(len(groups)-1):
         group.append(vss(groups[i]))
         # print('g', group)
+        if len(groups[i]) == 1 and groups[i][0].symbol_type not in [Token.Digit, Token.Group]:
+            continue
         if is_exp(get_group_ybox(groups[i]), get_group_ybox(groups[i+1])):
             group.append("^(")
             stack.append("(")

@@ -1,12 +1,12 @@
 from calculator.core.segmentation import Token, Lexer, is_exp, is_sub, get_group_ybox, segment
 
-BOX_RED, BOX_GREEN, BOX_BLUE = (0, 0, 255), (0, 255, 0), (0, 255, 0)
+BOX_RED, BOX_GREEN, BOX_BLUE = (0, 0, 255), (0, 255, 0), (255, 0, 0)
 
 def drawRect(img, rect, color):
     x, y, w, h = rect
     cv2.rectangle(img, (x,y), (x+w,y+h), color)
 
-def drawGroupRect(img, group, color):
+def drawGroupRect(img, group, color, width=None):
     if len(group) == 0:
         return
     minx, miny, maxx, maxy = (float("inf"),float("inf"),-1,-1)
@@ -20,14 +20,71 @@ def drawGroupRect(img, group, color):
             maxx = x+w
         if y+h > maxy:
             maxy = y+h
-    cv2.rectangle(img, (minx, miny), (maxx, maxy), color)
+    cv2.rectangle(img, (minx, miny), (maxx, maxy), color, thickness=width)
 
-def debugRect(group, color=(255, 0, 0)):
-    drawGroupRect(im, group, color)
+def debugRect(group, color=(255, 0, 0), width=None):
+    drawGroupRect(im, group, color, width)
     cv2.imshow("im", im)
     cv2.waitKey(wait)
 
     
+def hss(tokens):
+    #tokens = sorted(tokens, key= lambda x: x.x)
+    groups = []
+    group = []
+    xbound = -1
+    if len(tokens) == 1:
+        debugRect(tokens, BOX_GREEN, 2)
+        return tokens[0].symbol
+    if len(tokens) > 0 and tokens[0].symbol == 'sqrt':
+        return parse_sqrt(tokens)
+    for t in tokens:
+        if len(group) > 0 and (t.x > xbound or group[0].symbol not in ['-', 'sqrt']):
+            groups.append(group)
+            group = []
+        group.append(t)
+        xbound = max(t.x + t.w, xbound)
+    if len(group) > 0:
+        groups.append(group)
+        group = []
+
+    for g in groups:
+        debugRect(g, BOX_RED, 2)
+
+    return parse_exp(groups)
+
+def vss(tokens):
+    if len(tokens) == 1:
+        debugRect(tokens, BOX_GREEN, 2)
+        return tokens[0].symbol
+    if len(tokens) > 0 and tokens[0].symbol == 'sqrt':
+        return parse_sqrt(tokens)
+    frac_bar = [x for x in tokens if x.symbol == '-']
+    if len(frac_bar) == 0:
+        return hss(tokens)
+    
+    longest = max(frac_bar, key=lambda x:x.w)
+    top, bottom = [], []
+    for t in tokens:
+        if t == longest:
+            continue
+        elif t.y > longest.y:
+            bottom.append(t)
+        else:
+            top.append(t)
+    
+    debugRect(bottom, BOX_BLUE, 2)
+    debugRect(top, BOX_BLUE, 2)
+    
+    if len(top) > 0 and len(bottom) > 0:
+        return "".join(["(",hss(top),")","/","(",*hss(bottom),")"])
+    elif len(frac_bar) == 2 and len(tokens) == 2:
+        return "="
+    else:
+        parsed_top = ["(",hss(top),")"] if len(top) > 0 else ['?']
+        parsed_bottom = ["(",hss(bottom),")"] if len(bottom) > 0 else ['?']
+        return "".join(parsed_top+["/"]+parsed_bottom)
+
 def parse_sqrt(tokens):
     sq = tokens[0]
     inner, outer = [], []
@@ -46,6 +103,8 @@ def parse_exp(groups):
     for i in range(len(groups)-1):
         group.append(vss(groups[i]))
         # print('g', group)
+        if len(groups[i]) == 1 and groups[i][0].symbol_type not in [Token.Digit, Token.Group]:
+            continue
         if is_exp(get_group_ybox(groups[i]), get_group_ybox(groups[i+1])):
             group.append("^(")
             stack.append("(")
@@ -58,58 +117,6 @@ def parse_exp(groups):
         stack.pop()
         group.append(")")
     return "".join(group)
-
-def hss(tokens):
-    #tokens = sorted(tokens, key= lambda x: x.x)
-    groups = []
-    group = []
-    xbound = -1
-    if len(tokens) == 1:
-        return tokens[0].symbol
-    if len(tokens) > 0 and tokens[0].symbol == 'sqrt':
-        return parse_sqrt(tokens)
-    for t in tokens:
-        if len(group) > 0 and (t.x > xbound or group[0].gtype() in [Token.Digit, Token.Group]):
-            groups.append(group)
-            group = []
-        group.append(t)
-        xbound = max(t.x + t.w, xbound)
-    if len(group) > 0:
-        groups.append(group)
-        group = []
-    for g in groups:
-        debugRect(g, BOX_RED)
-    return parse_exp(groups)
-
-def vss(tokens):
-    if len(tokens) == 1:
-        return tokens[0].symbol
-    if len(tokens) > 0 and tokens[0].symbol == 'sqrt':
-        return parse_sqrt(tokens)
-    frac_bar = [x for x in tokens if x.symbol == '-']
-    if len(frac_bar) == 0:
-        return hss(tokens)
-    
-    longest = max(frac_bar, key=lambda x:x.w)
-    top, bottom = [], []
-    for t in tokens:
-        if t == longest:
-            continue
-        elif t.y > longest.y:
-            bottom.append(t)
-        else:
-            top.append(t)
-    
-    debugRect(bottom)
-    debugRect(top)
-    if len(top) > 0 and len(bottom) > 0:
-        return "".join(["(",hss(top),")","/","(",*hss(bottom),")"])
-    elif len(frac_bar) == 2 and len(tokens) == 2:
-        return "="
-    else:
-        parsed_top = ["(",hss(top),")"] if len(top) > 0 else ['?']
-        parsed_bottom = ["(",hss(bottom),")"] if len(bottom) > 0 else ['?']
-        return "".join(parsed_top+["/"]+parsed_bottom)
 
 def vevaluate(img, _wait=100, _timeout=500):
     import os

@@ -1,5 +1,6 @@
 # HandwritingCalculator
 
+![calculator_demo.gif](visual/calculator_demo.gif "calculator gui app")
 We're creating a calculator with GUI that recognizes handwritten math expressions and evaluate them.
 
 ## Motivation
@@ -8,7 +9,7 @@ It would be handy to have a calculator which evaluates handwritten math.
 
 ## Installation
 
-from calculator directory run following command:
+inside calculator directory run following command:
 
 ```pip3 install -r requirements.txt```
 
@@ -16,18 +17,25 @@ from calculator directory run following command:
 
 from root directory and run following command:
 
-```main.py [-h] [-t test image path] [-m model path]```
+```main.py [-h] [-t test image path] [-m model path] [--no-graphics]```
 
 optional arguments:
--h, --help          show this help message and exit
--t test image path  testing image on given path
--m model path       set classifier model specified on given path
+
+  **-h**, **--help**          show this help message and exit
+
+  **-t** *test image path*  testing image on given path
+
+  **-m** *model path*       set classifier model specified on given path     
+
+  **--no-graphics**       doesn't display graphics when running test file(s)
 
 ### example usage:
 
 ```main.py```
 
 ```main.py -t samples/sample1.PNG```
+
+```main.py -t samples --no-graphics -m recognition_model```
 
 ## Dataset
 

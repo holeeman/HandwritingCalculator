@@ -13,3 +13,4 @@ dataset/data/*
 dataset/testdata/*
 *.ipynb
 *.npy
+test.py
