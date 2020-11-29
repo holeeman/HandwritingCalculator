@@ -1,6 +1,6 @@
 # HandwritingCalculator
 
-![calculator_demo.gif](visual/calculator_demo.gif "calculator gui app")
+![calc_demo.gif](visual/calc_demo.gif "calculator gui app")
 We're creating a calculator with GUI that recognizes handwritten math expressions and evaluate them.
 
 ## Motivation
