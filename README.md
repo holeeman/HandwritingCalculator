@@ -1,7 +1,8 @@
 # HandwritingCalculator
 
 ![calc_demo.gif](visual/calc_demo.gif "calculator gui app")
-We're creating a calculator with GUI that recognizes handwritten math expressions and evaluate them.
+
+We're creating a calculator that recognizes handwritten math expressions and evaluate them.
 
 ## Motivation
 
@@ -23,9 +24,9 @@ optional arguments:
 
   **-h**, **--help**          show this help message and exit
 
-  **-t** *test image path*  testing image on given path
+  **-t** **test image path**  testing image on given path
 
-  **-m** *model path*       set classifier model specified on given path     
+  **-m** **model path**       set classifier model specified on given path     
 
   **--no-graphics**       doesn't display graphics when running test file(s)
 
@@ -55,7 +56,11 @@ Then we splitted the datset into train set and test set (80% 20%).
 
 To train our dataset, we built a Convolutional Neural Network(CNN) using tensorflow-keras.
 
-The network architecture is inside network.py
+The network architecture is inside calculator.network.models module.
+
+![acc_loss.PNG](visual/acc_loss.PNG "accuracy and loss graph")
+
+This is the result of our training.
 
 ## Contributors
 
@@ -71,4 +76,5 @@ Harold Mouchère, ICFHR 2014 CROHME: Fourth International Competition on Recogni
 
 ## License
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+
 [![License: CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
