@@ -36,7 +36,7 @@ if __name__ == "__main__":
             imfiles = [join(testpath, f) for f in listdir(testpath) if isfile(join(testpath, f))]
 
         for imfile in imfiles:
-            p, e = calculator.calculate(imfile) if args.no_graphics else vevaluate(imfile, _wait=50, _timeout=10)
+            p, e = calculator.calculate(imfile) if args.no_graphics else vevaluate(imfile, _wait=1000, _timeout=0)
             print(f" ====== {basename(imfile)} ======")
             print("* Equation: ")
             print(f" {p}")
@@ -44,7 +44,6 @@ if __name__ == "__main__":
             print("* Evaluation: ")
             print(f" {e}")
             print()
-            #print(f"[{basename(imfile)}] Expression: {expr}\tResult: {res}")
             
     else:
         calculatorApp = GUICalculatorApplication(True, False)

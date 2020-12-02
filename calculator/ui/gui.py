@@ -7,6 +7,7 @@ from sympy import sympify
 from sympy.printing import latex
 import io
 import sys
+import time
 
 class CalculatorWidget(QWidget):
     canvasSize = (1000,500)
@@ -55,6 +56,9 @@ class CalculatorWidget(QWidget):
 
         # use async toggle
         self.initAsyncToggle()
+
+        # debug
+        self.initDebug()
         
         self.show()
     
@@ -113,6 +117,15 @@ class CalculatorWidget(QWidget):
         self.latexToggle.setChecked(self.useAsync)
         self.latexToggle.stateChanged.connect(self.toggleAsync)
         self.latexToggle.move(self.asyncTogglePosition[0], self.asyncTogglePosition[1])
+    
+    def initDebug(self):
+        self.startTime = time.time()
+
+    def setDebugStartTime(self):
+        self.startTime = time.time()
+
+    def printDebugExecTime(self):
+        print(time.time() - self.startTime)
     
     def toggleLatex(self):
         self.useLatex = not self.useLatex
@@ -174,12 +187,14 @@ class CalculatorWidget(QWidget):
             buffer = QBuffer()
             buffer.open(QBuffer.ReadWrite)
             self.image.save(buffer, "PNG")
+            self.setDebugStartTime()
             if self.useAsync:
                 self.runOnDrawAsync(io.BytesIO(buffer.data()))
             else:
                 self.afterOnDraw(self.onDraw(io.BytesIO(buffer.data())))
     
     def afterOnDraw(self, result):
+        self.printDebugExecTime()
         expr, ans = result
         try:
             expr = latex(sympify(expr, evaluate=False)) if self.useLatex else expr

@@ -34,7 +34,7 @@ def hss(tokens):
     group = []
     xbound = -1
     if len(tokens) == 1:
-        debugRect(tokens, BOX_GREEN, 2)
+        debugRect(tokens, BOX_BLUE, 1)
         return tokens[0].symbol
     if len(tokens) > 0 and tokens[0].symbol == 'sqrt':
         return parse_sqrt(tokens)
@@ -49,13 +49,13 @@ def hss(tokens):
         group = []
 
     for g in groups:
-        debugRect(g, BOX_RED, 2)
+        debugRect(g, BOX_RED, 1)
 
     return parse_exp(groups)
 
 def vss(tokens):
     if len(tokens) == 1:
-        debugRect(tokens, BOX_GREEN, 2)
+        debugRect(tokens, BOX_BLUE, 1)
         return tokens[0].symbol
     if len(tokens) > 0 and tokens[0].symbol == 'sqrt':
         return parse_sqrt(tokens)
@@ -73,8 +73,8 @@ def vss(tokens):
         else:
             top.append(t)
     
-    debugRect(bottom, BOX_BLUE, 2)
-    debugRect(top, BOX_BLUE, 2)
+    debugRect(bottom, BOX_BLUE, 1)
+    debugRect(top, BOX_BLUE, 1)
     
     if len(top) > 0 and len(bottom) > 0:
         return "".join(["(",hss(top),")","/","(",*hss(bottom),")"])

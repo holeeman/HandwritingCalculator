@@ -10,7 +10,8 @@ class LatexLabel(QLabel):
     
     def setLatexText(self, text):
         '''
-            code from https://stackoverflow.com/questions/32035251/displaying-latex-in-pyqt-pyside-qtablewidget
+            I modified the code I got from https://stackoverflow.com/questions/32035251/displaying-latex-in-pyqt-pyside-qtablewidget
+            by Jean-Sébastien
         '''
         if text == '':
             self.setPixmap(QPixmap())
