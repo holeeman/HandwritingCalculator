@@ -1,3 +1,9 @@
+'''
+@author: Hosung Lee
+@date: December 2 2020
+@description: Visual demo of each process
+'''
+
 from calculator.core.segmentation import Token, Lexer, is_exp, is_sub, get_group_ybox, segment
 
 BOX_RED, BOX_GREEN, BOX_BLUE = (0, 0, 255), (0, 255, 0), (255, 0, 0)

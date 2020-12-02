@@ -1,3 +1,9 @@
+'''
+@author: Hosung Lee
+@date: December 2 2020
+@description: Image tool for preprocess
+'''
+
 from PIL import Image
 from tensorflow.keras import preprocessing
 import numpy as np

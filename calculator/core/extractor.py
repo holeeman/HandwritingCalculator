@@ -1,3 +1,9 @@
+'''
+@author: Hosung Lee
+@date: December 2 2020
+@description: Extractor class
+'''
+
 import cv2
 import numpy as np
 from PIL import Image

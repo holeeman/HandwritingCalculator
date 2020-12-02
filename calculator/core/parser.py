@@ -1,3 +1,9 @@
+'''
+@author: Hosung Lee
+@date: December 2 2020
+@description: Parser class
+'''
+
 from calculator.utils.pipeline import Pipe
 from calculator.core.segmentation import segment
 

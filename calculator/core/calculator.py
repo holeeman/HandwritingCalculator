@@ -1,4 +1,9 @@
-# -*- coding: utf-8 -*-
+'''
+@author: Hosung Lee
+@date: December 2 2020
+@description: Calculator Core class
+'''
+
 from .classifier import Classifier
 from .extractor import Extractor
 from .parser import Parser

@@ -1,3 +1,9 @@
+'''
+@author: Hosung Lee
+@date: December 2 2020
+@description: Calculator gui (latex, multiprocessing support)
+'''
+
 from PyQt5.QtWidgets import QApplication, QAction, QPushButton, QMainWindow, QListView, QLabel, QWidget, QCheckBox
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QPixmap, QPainter, QImage, QPen, QFont
 from PyQt5.QtCore import Qt, QPoint, QBuffer, QThreadPool

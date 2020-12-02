@@ -1,3 +1,9 @@
+'''
+@author: Hosung Lee
+@date: December 2 2020
+@description: Pipeline to connect models
+'''
+
 class Pipe:
     def exec(self, arg=None):
         ...

@@ -1,3 +1,9 @@
+'''
+@author: Hosung Lee
+@date: December 2 2020
+@description: Preprocesing code
+'''
+
 import tensorflow as tf
 from tensorflow.keras import preprocessing
 import os

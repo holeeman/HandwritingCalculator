@@ -1,3 +1,8 @@
+'''
+@date: December 2 2020
+@description: Latex Label class
+'''
+
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget
 from PyQt5.QtGui import QStandardItemModel, QStandardItem, QPixmap, QPainter, QImage, QPen, QFont
 from PyQt5.QtCore import Qt, QPoint, QBuffer, QThreadPool

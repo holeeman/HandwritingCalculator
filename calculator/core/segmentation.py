@@ -1,3 +1,9 @@
+'''
+@author: Hosung Lee
+@date: December 2 2020
+@description: HS, VS and exp sqrt parsers. Used by .parser.py
+'''
+
 class Token:
     Digit = 'd'
     Operator = 'o'

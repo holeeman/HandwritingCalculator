@@ -1,3 +1,9 @@
+'''
+@author: Hosung Lee
+@date: December 2 2020
+@description: Classifier class
+'''
+
 from calculator.utils.imtool import convertImage
 from calculator.utils.pipeline import Pipe
 from calculator.network.symbols import Symbols

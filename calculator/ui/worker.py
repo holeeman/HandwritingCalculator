@@ -1,3 +1,9 @@
+'''
+@author: Hosung Lee
+@date: December 2 2020
+@description: Worker class for multiprocessing
+'''
+
 from PyQt5.QtCore import QRunnable, pyqtSignal, QObject
 import sys
 import traceback

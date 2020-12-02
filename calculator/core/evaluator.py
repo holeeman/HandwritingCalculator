@@ -1,3 +1,9 @@
+'''
+@author: Hosung Lee
+@date: December 2 2020
+@description: Evaluator class
+'''
+
 from sympy.parsing.sympy_parser import parse_expr
 from sympy.core.numbers import Float, ComplexInfinity
 from calculator.utils.pipeline import Pipe
